@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:id="@+id/nestedScrollView"
+    android:background="@color/colorPrimaryDark"
+    android:padding="20dp"
+    tools:context=".activities.LoginActivity">
+
+
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/glucoseLevel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/hint"
+                android:layout_gravity="left"
+                android:layout_weight="1"
+                android:hint="@string/hint_glucoseLevel"
+                android:inputType="numberDecimal"
+                android:maxLines="1"
+                android:textColor="@color/colorText"
+                 />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="mmol/L"
+                android:gravity="right"/>
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+        <!-- end of glucose level horizonatal layout -->
+
+
+        <Spinner
+            android:id="@+id/static_spinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp" />
+
+
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/time_view_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/set_time"
+            android:layout_gravity="left"
+            android:layout_weight="1"
+            android:focusable="false"
+            />
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/date_view_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/set_date"
+            android:layout_gravity="left"
+            android:layout_weight="1"
+            android:focusable="false"
+            />
+
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_view_glucose"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/font"
+            android:background="@color/button"
+            android:text="@string/log_glucose"
+            android:onClick=""
+            />
+
+
+
+
+    </android.support.v7.widget.LinearLayoutCompat>
+</android.support.v4.widget.NestedScrollView>

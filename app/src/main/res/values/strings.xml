@@ -1,0 +1,95 @@
+<resources>
+    <string name="app_name">B&amp;P</string>
+    <string name="hint_name"> Name</string>
+    <string name="hint_email"> Email</string>
+    <string name="hint_password"> Password </string>
+    <string name="hint_confirm_password"> Confirm Password </string>
+    <string name="text_login">Login</string>
+    <string name="text_register"> Register</string>
+    <string name="error_message_name"> Enter Full Name</string>
+    <string name="error_message_email"> Enter Valid Email</string>
+    <string name="error_message_age"> Enter Age </string>
+    <string name="error_message_password"> Enter Password </string>
+    <string name="success_message"> Registration Successful</string>
+    <string name="text_not_member"> No account yet? Create One</string>
+    <string name="text_already_member"> Already a member? Login</string>
+    <string name="error_email_exists"> Email already exists </string>
+    <string name="error_password_match"> Password does not match </string>
+    <string name="error_valid_email_password"> Wrong Email or Password</string>
+    <string name="text_age"> Age </string>
+    <string name="text_weight"> Weight(Kg)</string>
+    <string name="text_height">Height(Cm)</string>
+    <string name="view_week"> View Week Steps</string>
+    <string name="view_today"> View Today\'s Steps</string>
+    <string name="view_calories"> View Calories </string>
+    <string name="view_glucose"> Glucose </string>
+    <string name="log_glucose"> Log </string>
+    <string name="hint_glucoseLevel">Glucose Level</string>
+    <string name="set_time"> Set Time</string>
+    <string name="set_date"> Set Date</string>
+    <string name="log_medication" > Medication</string>
+    <string name="hint_dosage"> Dosage</string>
+
+    <!-- spinner -->
+
+    <string-array name="meal_array">
+        <item>Before Breakfast</item>
+        <item>After Breakfast</item>
+        <item>Before Lunch</item>
+        <item>After Lunch</item>
+        <item>Before Dinner</item>
+        <item>After Dinner</item>
+        <item>After Exercise</item>
+    </string-array>
+
+    <string-array name="medic_array">
+        <item> Acarbose </item>
+        <item> Miglitol</item>
+        <item> Kazano </item>
+        <item> Invokamet</item>
+        <item> Xigduo XR</item>
+        <item> Synjardy</item>
+        <item> Glucovance</item>
+        <item> Jentadueto</item>
+        <item> Actoplus</item>
+        <item> PrandiMet</item>
+        <item> Avandamet</item>
+        <item> Kombiglyze</item>
+        <item> Janumet </item>
+        <item> Nesina</item>
+        <item> Oseni</item>
+        <item> Tradjenta</item>
+        <item> Glyxambi</item>
+        <item> Onglyza</item>
+        <item> Januvia</item>
+        <item> Juvisync</item>
+        <item> Tanzeum</item>
+        <item> Trulicity</item>
+        <item> Byetta</item>
+        <item> Bydureon</item>
+        <item> Victoza</item>
+        <item> Starlix</item>
+        <item> Prandin</item>
+        <item> Farxiga</item>
+        <item> Invokana </item>
+        <item> Jardiance</item>
+        <item> Amaryl</item>
+        <item> Duetact</item>
+        <item> Avandaryl</item>
+        <item> Glucotrol</item>
+        <item> Metaglip</item>
+        <item> Tolinase</item>
+        <item> Orinase</item>
+        <item> Tol-Tab</item>
+        <item> Avandia</item>
+        <item> Actos</item>
+        <item> Actoplus Met XR</item>
+
+    </string-array>
+
+    <string-array name="unit_array">
+        <item> mg</item>
+        <item> mL</item>
+        <item> tablet</item>
+    </string-array>
+</resources>
