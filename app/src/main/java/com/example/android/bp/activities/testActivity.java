@@ -20,11 +20,11 @@ public class testActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
-        ProgressBar progressBar = (ProgressBar)findViewById(R.id.cPB);
-        progressBar.setProgress(45);
-
-        TextView txtView = (TextView)findViewById(R.id.textView1);
-        txtView.setText("50%");
+//        ProgressBar progressBar = (ProgressBar)findViewById(R.id.cPB);
+//        progressBar.setProgress(45);
+//
+//        TextView txtView = (TextView)findViewById(R.id.textView1);
+//        txtView.setText("50%");
 
     }
 }
