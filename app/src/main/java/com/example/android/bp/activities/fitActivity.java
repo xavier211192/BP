@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -51,13 +52,14 @@ public class fitActivity extends AppCompatActivity implements
         View.OnClickListener {
 
     private Button mButtonViewWeek;
+    public  int weekStep = 0;
     private Button mButtonViewToday;
     private Button mButtonViewCalories;
     private Button mButtonViewGlucose;
     private Button mButtonViewMedication;
-    private Button mButtonAddSteps;
-    private Button mButtonUpdateSteps;
-    private Button mButtonDeleteSteps;
+//    private Button mButtonAddSteps;
+//    private Button mButtonUpdateSteps;
+//    private Button mButtonDeleteSteps;
     private TextView mDisp;
     private TextView mDisplay;
     private ProgressBar progressBar;
@@ -200,6 +202,8 @@ public class fitActivity extends AppCompatActivity implements
         long endTime = cal.getTimeInMillis();
         cal.add(Calendar.WEEK_OF_YEAR, -1);
         long startTime = cal.getTimeInMillis();
+        weekStep = 0;
+        int stepCount;
 
         java.text.DateFormat dateFormat = DateFormat.getDateInstance();
         Log.e("History", "Range Start: " + dateFormat.format(startTime));
@@ -220,25 +224,41 @@ public class fitActivity extends AppCompatActivity implements
             for (Bucket bucket : dataReadResult.getBuckets()) {
                 List<DataSet> dataSets = bucket.getDataSets();
                 for (DataSet dataSet : dataSets) {
-                    showDataSet(dataSet);
+                     stepCount = showDataSet(dataSet);
+                     weekStep = weekStep + stepCount;
                 }
+
             }
+
         }
+
+
+
         //Used for non-aggregated data
         else if (dataReadResult.getDataSets().size() > 0) {
             Log.e("History", "Number of returned DataSets: " + dataReadResult.getDataSets().size());
             for (DataSet dataSet : dataReadResult.getDataSets()) {
-                showDataSet(dataSet);
+
             }
         }
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                String yes = String.valueOf(weekStep);
+                mDisplay.setText(yes);
+//                mButtonViewWeek.setEnabled(false);
+            }
+        });
+
     }
 
 
-    private void showDataSet(DataSet dataSet) {
+    private int showDataSet(DataSet dataSet) {
         Log.e("History", "Data returned for Data type: " + dataSet.getDataType().getName());
         DateFormat dateFormat = DateFormat.getDateInstance();
         DateFormat timeFormat = DateFormat.getTimeInstance();
-
+            int weekStep = 0;
         for (DataPoint dp : dataSet.getDataPoints()) {
             Log.e("History", "Data point:");
 
@@ -249,8 +269,10 @@ public class fitActivity extends AppCompatActivity implements
                 Log.e("History", "\tField: " + field.getName() +
                         " Value: " + dp.getValue(field));
 
+                    weekStep = dp.getValue(field).asInt();
             }
         }
+        return weekStep;
     }
 
     private void addStepDataToGoogleFit() {
@@ -433,4 +455,19 @@ public class fitActivity extends AppCompatActivity implements
         Intent i = new Intent(fitActivity.this,testActivity.class);
         startActivity(i);
     }
+
+
+    public void caloriesActivity (View view)
+    {
+        Intent i = new Intent(fitActivity.this,caloriesActivity.class);
+        startActivity(i);
+    }
+
+    public void diabetesinfoActivity (View view)
+    {
+        Intent i = new Intent(fitActivity.this,diabetesinfoActivity.class);
+        startActivity(i);
+    }
+
+
 }

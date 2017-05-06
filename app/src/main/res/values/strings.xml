@@ -19,16 +19,18 @@
     <string name="text_age"> Age </string>
     <string name="text_weight"> Weight(Kg)</string>
     <string name="text_height">Height(Cm)</string>
-    <string name="view_week"> View Week Steps</string>
+    <string name="view_steps"> Steps</string>
     <string name="view_today"> View Today\'s Steps</string>
-    <string name="view_calories"> View Calories </string>
+    <string name="view_calories"> Calories </string>
     <string name="view_glucose"> Glucose </string>
     <string name="log_glucose"> Log </string>
     <string name="hint_glucoseLevel">Glucose Level</string>
     <string name="set_time"> Set Time</string>
     <string name="set_date"> Set Date</string>
-    <string name="log_medication" > Medication</string>
-    <string name="hint_dosage"> Dosage</string>
+    <string name="log_medication"> Medication</string>
+    <string name="hint_dosage">Dosage</string>
+    <string name="week_calories">Calories</string>
+    <string name="diabetes_help">Diabetes Help</string>
 
     <!-- spinner -->
 
@@ -92,4 +94,7 @@
         <item> mL</item>
         <item> tablet</item>
     </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

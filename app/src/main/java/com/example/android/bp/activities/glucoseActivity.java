@@ -5,7 +5,8 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
+//import android.widget.Button;
+
 
 import com.example.android.bp.R;
 
@@ -20,6 +21,7 @@ public class glucoseActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_glucose);
 
+
         FloatingActionButton logGlucose = (FloatingActionButton)  findViewById(R.id.addLogButton);
         logGlucose.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -29,6 +31,8 @@ public class glucoseActivity extends AppCompatActivity{
 
             }
         });
+
+
 
     }
 
