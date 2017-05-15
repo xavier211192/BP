@@ -52,12 +52,12 @@ public class fitActivity extends AppCompatActivity implements
         View.OnClickListener {
 
     private Button mButtonViewWeek;
-    public  int weekStep = 0;
+    private int weekStep = 0;
     private Button mButtonViewToday;
     private Button mButtonViewCalories;
     private Button mButtonViewGlucose;
     private Button mButtonViewMedication;
-//    private Button mButtonAddSteps;
+    //    private Button mButtonAddSteps;
 //    private Button mButtonUpdateSteps;
 //    private Button mButtonDeleteSteps;
     private TextView mDisp;
@@ -88,7 +88,7 @@ public class fitActivity extends AppCompatActivity implements
                 .enableAutoManage(this, 0, this)
                 .build();
 
-        mGoogleApiClient1 =mGoogleApiClient;
+        mGoogleApiClient1 = mGoogleApiClient;
     }
 
     private void initViews() {
@@ -98,9 +98,8 @@ public class fitActivity extends AppCompatActivity implements
         mButtonViewGlucose = (Button) findViewById(R.id.btn_view_glucose);
         mButtonViewMedication = (Button) findViewById(R.id.btn_view_medication);
         mDisp = (TextView) findViewById(R.id.dispTextView);
-        progressBar = (ProgressBar)findViewById(R.id.cPB);
+        progressBar = (ProgressBar) findViewById(R.id.cPB);
         mDisplay = (TextView) findViewById(R.id.dispTextView1);
-
 
 
 //        mButtonAddSteps = (Button) findViewById(R.id.btn_add_steps);
@@ -129,9 +128,9 @@ public class fitActivity extends AppCompatActivity implements
                     ? 0
                     : totalSet.getDataPoints().get(0).getValue(Field.FIELD_STEPS).asInt();
 //
-            double total1 = (((double)total)/10000)*100;
+            double total1 = (((double) total) / 10000) * 100;
 
-           int bar = (int)total1;
+            int bar = (int) total1;
             progressBar.setProgress(bar);
             final String yes = String.valueOf(total);
 
@@ -150,49 +149,37 @@ public class fitActivity extends AppCompatActivity implements
     }
 
 
-
-
-
-
-
-
     //get calorie count
 
 
     private void displayCalorieDataForToday() {
 
 
-        DailyTotalResult result = Fitness.HistoryApi.readDailyTotal(fitActivity.mGoogleApiClient1, DataType.TYPE_CALORIES_EXPENDED).await(1,TimeUnit.MINUTES);
+        DailyTotalResult result = Fitness.HistoryApi.readDailyTotal(fitActivity.mGoogleApiClient1, DataType.TYPE_CALORIES_EXPENDED).await(1, TimeUnit.MINUTES);
 
         if (result.getStatus().isSuccess()) {
             DataSet totalSet = result.getTotal();
-             float total = totalSet.isEmpty()
+            float total = totalSet.isEmpty()
                     ? 0
                     : totalSet.getDataPoints().get(0).getValue(Field.FIELD_CALORIES).asFloat();
 
 
+            final String yes = String.valueOf(total);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
 
-               final String yes = String.valueOf(total);
-               runOnUiThread(new Runnable() {
-                   @Override
-                   public void run() {
-
-                        mDisp.setText("");
-                       mDisp.setText(yes);
-                       mDisplay.setText("Calories burnt today");
-                   }
-               });
+                    mDisp.setText("");
+                    mDisp.setText(yes);
+                    mDisplay.setText("Calories burnt today");
+                }
+            });
 
 //            showDataSet(result.getTotal());
-        }
-        else {
+        } else {
             mDisplay.setText("Error Loading Data");
         }
     }
-
-
-
-
 
 
     private void displayLastWeeksData() {
@@ -224,14 +211,13 @@ public class fitActivity extends AppCompatActivity implements
             for (Bucket bucket : dataReadResult.getBuckets()) {
                 List<DataSet> dataSets = bucket.getDataSets();
                 for (DataSet dataSet : dataSets) {
-                     stepCount = showDataSet(dataSet);
-                     weekStep = weekStep + stepCount;
+                    stepCount = showDataSet(dataSet);
+                    weekStep = weekStep + stepCount;
                 }
 
             }
 
         }
-
 
 
         //Used for non-aggregated data
@@ -258,7 +244,7 @@ public class fitActivity extends AppCompatActivity implements
         Log.e("History", "Data returned for Data type: " + dataSet.getDataType().getName());
         DateFormat dateFormat = DateFormat.getDateInstance();
         DateFormat timeFormat = DateFormat.getTimeInstance();
-            int weekStep = 0;
+        int weekStep = 0;
         for (DataPoint dp : dataSet.getDataPoints()) {
             Log.e("History", "Data point:");
 
@@ -269,7 +255,7 @@ public class fitActivity extends AppCompatActivity implements
                 Log.e("History", "\tField: " + field.getName() +
                         " Value: " + dp.getValue(field));
 
-                    weekStep = dp.getValue(field).asInt();
+                weekStep = dp.getValue(field).asInt();
             }
         }
         return weekStep;
@@ -404,7 +390,6 @@ public class fitActivity extends AppCompatActivity implements
     }
 
 
-
     private class ViewCaloriesTask extends AsyncTask<Void, Void, Void> {
         protected Void doInBackground(Void... params) {
             displayCalorieDataForToday();
@@ -438,36 +423,36 @@ public class fitActivity extends AppCompatActivity implements
     }
 
     //open glucose log
-    public void glucoseActivity(View view)
-    {
+    public void glucoseActivity(View view) {
         Intent i = new Intent(fitActivity.this, glucoseActivity.class);
         startActivity(i);
     }
 
-    public void medicationActivity (View view)
-    {
-        Intent i = new Intent(fitActivity.this,medicationActivity.class);
+    public void medicationActivity(View view) {
+        Intent i = new Intent(fitActivity.this, medicationActivity.class);
         startActivity(i);
     }
 
-    public void testActivity (View view)
-    {
-        Intent i = new Intent(fitActivity.this,testActivity.class);
+    public void testActivity(View view) {
+        Intent i = new Intent(fitActivity.this, testActivity.class);
         startActivity(i);
     }
 
 
-    public void caloriesActivity (View view)
-    {
-        Intent i = new Intent(fitActivity.this,caloriesActivity.class);
+    public void caloriesActivity(View view) {
+        Intent i = new Intent(fitActivity.this, caloriesActivity.class);
         startActivity(i);
     }
 
-    public void diabetesinfoActivity (View view)
-    {
-        Intent i = new Intent(fitActivity.this,diabetesinfoActivity.class);
+    public void diabetesinfoActivity(View view) {
+        Intent i = new Intent(fitActivity.this, diabetesinfoActivity.class);
         startActivity(i);
     }
 
+
+    public void graphActivity(View view) {
+        Intent i = new Intent(fitActivity.this, graphActivity.class);
+        startActivity(i);
+    }
 
 }

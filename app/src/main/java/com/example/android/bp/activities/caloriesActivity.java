@@ -199,13 +199,13 @@ public class caloriesActivity extends AppCompatActivity implements
 //            BarDataSet dataset = new BarDataSet(entries, "# of Steps");
             LineDataSet dataset = new LineDataSet(entries, "# of Calories");
 //            BarData data = new BarData(labels, dataset);
-            LineData data = new LineData(labels, dataset);
+//            LineData data = new LineData(labels, dataset);
             chart.setNoDataText("Touch to generate graph");
             dataset.setColors(ColorTemplate.COLORFUL_COLORS);
-            dataset.setDrawCubic(true);
+//            dataset.setDrawCubic(true);
             dataset.setDrawFilled(true);
 //            chart.setDescription("Number of Steps over the week");
-            chart.setData(data);
+//            chart.setData(data);
             progressBar.setMax(16000);
             for(int i :weekStep){
                 total = total + i;

@@ -71,6 +71,7 @@ public class testActivity extends AppCompatActivity implements
     public ArrayList<String> labels = new ArrayList<String>();
 
 
+
     public  int weekStep = 0;
     public int total = 0;
 
@@ -207,6 +208,8 @@ public class testActivity extends AppCompatActivity implements
 
             BarDataSet dataset = new BarDataSet(entries, "# of Steps");
             BarData data = new BarData(labels, dataset);
+//            Bundle b = new Bundle();
+//            b.putStringArray("key",entries);
 
             dataset.setColors(ColorTemplate.LIBERTY_COLORS);
 //            chart.setDescription("Number of Steps over the week");
@@ -289,7 +292,8 @@ public class testActivity extends AppCompatActivity implements
 
 
     private void displayLastWeeksCaloriesData() {
-       removeDataSet();
+       chart.clearValues();
+        chart.clear();
 
         Calendar cal = Calendar.getInstance();
         Date now = new Date();

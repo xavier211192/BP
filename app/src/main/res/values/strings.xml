@@ -31,7 +31,8 @@
     <string name="hint_dosage">Dosage</string>
     <string name="week_calories">Calories</string>
     <string name="diabetes_help">Diabetes Help</string>
-
+    <string name="step_tab">Steps</string>
+    <string name="calorie_tab">Calories</string>
     <!-- spinner -->
 
     <string-array name="meal_array">
