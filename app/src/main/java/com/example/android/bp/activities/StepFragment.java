@@ -216,12 +216,11 @@ public class StepFragment extends Fragment implements
                     BarData data = new BarData(labels, dataset);
 
                     dataset.setColors(ColorTemplate.LIBERTY_COLORS);
-//            chart.setDescription("Number of Steps over the week");
+//
                     chart.setData(data);
-                    chart.performClick();
-//            chart.animateXY(2000,2000);
-//           chart.invalidate();
-                    chart.notifyDataSetChanged();
+
+//
+//                    chart.notifyDataSetChanged();
 //                    progressBar.setMax(80000);
                     for(int i :weekStep){
                         total = total + i;

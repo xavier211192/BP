@@ -207,7 +207,7 @@ public class CalorieFragment extends Fragment implements
 
             }
 
-            BarDataSet dataset = new BarDataSet(entries, "# of Steps");
+            BarDataSet dataset = new BarDataSet(entries, "# of Calories");
 //            LineDataSet dataset = new LineDataSet(entries, "# of Calories");
             BarData data = new BarData(labels, dataset);
 //            LineData data = new LineData(labels, dataset);

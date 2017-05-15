@@ -33,7 +33,7 @@ public class graphActivity extends AppCompatActivity {
 
     public static class TabsExamplePagerAdapter extends FragmentPagerAdapter {
         // As we are implementing two tabs
-        private static final int NUM_ITEMS = 2;
+        private static final int NUM_ITEMS = 3;
 
         public TabsExamplePagerAdapter(FragmentManager fm) {
             super(fm);
@@ -47,6 +47,8 @@ public class graphActivity extends AppCompatActivity {
                     return new StepFragment();
                 case 1:
                     return new CalorieFragment();
+                case 2:
+                    return new Glucosefragment();
                 default:
                     return null;
             }
@@ -64,7 +66,9 @@ public class graphActivity extends AppCompatActivity {
             // Otherwise it should be access using string resource
             if (position == 0) {
                 return "Steps";
-            } else return "Calories";
+            } else if (position == 1){
+                return "Calories";
+            }else return "Glucose";
         }
     }
 
