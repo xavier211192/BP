@@ -9,4 +9,6 @@
     <color name="button">#7e57c2</color>
     <color name="font"> #e0e0e0</color>
     <color name="hint">#000000</color>
+    <color name="grey">#eeeeee</color>
+
 </resources>
