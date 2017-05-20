@@ -5,11 +5,17 @@
     tools:context="com.example.android.bp.activities.StepFragment">
 
     <!-- TODO: Update blank fragment layout -->
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/grey"
+        >
     <com.github.mikephil.charting.charts.HorizontalBarChart
-        android:id="@+id/chart"
-        android:layout_marginTop="50dp"
+        android:id="@+id/chartx"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="15dp"
         android:layout_width="350dp"
-        android:layout_height="380dp" />
-
+        android:layout_height="300dp" />
+    </android.support.v7.widget.LinearLayoutCompat>
 </FrameLayout>
