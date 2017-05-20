@@ -20,13 +20,14 @@ public class graphActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
+//        getActionBar().hide();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         // Assign created adapter to viewPager
         viewPager.setAdapter(new TabsExamplePagerAdapter(getSupportFragmentManager()));
-
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        viewPager.setOffscreenPageLimit( 4);
+            TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         // This method setup all required method for TabLayout with Viewpager
         tabLayout.setupWithViewPager(viewPager);
         }
@@ -44,11 +45,12 @@ public class graphActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new StepFragment();
-                case 1:
                     return new CalorieFragment();
+
+                case 1:
+                    return new GlucoseFragment();
                 case 2:
-                    return new Glucosefragment();
+                    return new StepFragment();
                 default:
                     return null;
             }
@@ -64,11 +66,17 @@ public class graphActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             // For simplicity of this tutorial this string is hardcoded
             // Otherwise it should be access using string resource
-            if (position == 0) {
-                return "Steps";
-            } else if (position == 1){
-                return "Calories";
-            }else return "Glucose";
+            switch (position) {
+                case 0:
+                    return "Calories";
+                case 1:
+                    return "Glucose";
+                case 2:
+                    return "Steps";
+                default:
+                    return null;
+            }
+
         }
     }
 
