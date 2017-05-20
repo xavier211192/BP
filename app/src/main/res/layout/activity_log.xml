@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/nestedScrollView"
-    android:background="@color/colorPrimaryDark"
-    android:padding="20dp"
-    tools:context=".activities.LoginActivity">
+    android:orientation="vertical"
+    >
 
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        />
 
-
-    <android.support.v7.widget.LinearLayoutCompat
+<android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -59,7 +66,6 @@
             android:layout_height="wrap_content"
             android:text="@string/set_time"
             android:layout_gravity="left"
-            android:layout_weight="1"
             android:focusable="false"
             />
         <android.support.v7.widget.AppCompatEditText
@@ -68,7 +74,6 @@
             android:layout_height="wrap_content"
             android:text="@string/set_date"
             android:layout_gravity="left"
-            android:layout_weight="1"
             android:focusable="false"
             />
 
@@ -88,4 +93,4 @@
 
 
     </android.support.v7.widget.LinearLayoutCompat>
-</android.support.v4.widget.NestedScrollView>
+</LinearLayout>
