@@ -12,10 +12,10 @@ import com.example.android.bp.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Glucosefragment extends Fragment {
+public class GlucoseFragment extends Fragment {
 
 
-    public Glucosefragment() {
+    public GlucoseFragment() {
         // Required empty public constructor
     }
 
@@ -24,7 +24,8 @@ public class Glucosefragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_glucosefragment, container, false);
+        View v = inflater.inflate(R.layout.fragment_glucose, container, false);
+        return v;
     }
 
 }
