@@ -2,6 +2,7 @@ package com.example.android.bp.activities;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,12 +17,16 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -65,13 +70,21 @@ public class CalorieFragment extends Fragment implements
         GoogleApiClient.OnConnectionFailedListener
 {
 
-    BarChart chart;
-    public ArrayList<BarEntry> entries = new ArrayList<>();
+//    BarChart chart;
+    LineChart chart;
+    ProgressBar progressBar;
+    TextView totalTextView;
+   // ArrayAdapter <String> adapter ;
+    ListView listView;
+   // public ArrayList<BarEntry> entries = new ArrayList<>();
+    public ArrayList<Entry> entries = new ArrayList<>();
+
     public ArrayList<String> labels = new ArrayList<String>();
-    public int weekStep = 0;
+    //public int weekStep = 0;
     public int total = 0;
 
-
+    int[] weekStep = new int[10];
+    String[] date = new String[10];
     public GoogleApiClient mGoogleApiClient;
 
     public static GoogleApiClient mGoogleApiClient1;
@@ -94,7 +107,12 @@ public class CalorieFragment extends Fragment implements
 
 
         View v = inflater.inflate(R.layout.fragment_calorie, container, false);
-        chart =  (BarChart) v.findViewById(R.id.chart1);
+       // chart =  (BarChart) v.findViewById(R.id.chart);
+        chart = (LineChart) v.findViewById(R.id.chart);
+        progressBar = (ProgressBar) v.findViewById(R.id.progress_bar);
+        totalTextView =(TextView) v.findViewById(R.id.total);
+        // listView = (ListView) v.findViewById(R.id.list_view);
+
         return v;
     }
 
@@ -110,13 +128,17 @@ public class CalorieFragment extends Fragment implements
                 .build();
         mGoogleApiClient1 =mGoogleApiClient;
         new ViewWeekStepCountTask().execute();
+
+
     }
 
     @Override
     public void onStart() {
         super.onStart();
         mGoogleApiClient.connect();
+
     }
+
 
     @Override
     public void onStop() {
@@ -146,7 +168,7 @@ public class CalorieFragment extends Fragment implements
         cal.set(Calendar.MINUTE,0);
         cal.set(Calendar.SECOND,0);
         long startTime = cal.getTimeInMillis();
-//        int weekStep = 0;
+     //   int weekStep = 0;
         int stepCount;
         total = 0;
         java.text.DateFormat dateFormat = DateFormat.getDateInstance();
@@ -164,8 +186,7 @@ public class CalorieFragment extends Fragment implements
         int size = dataReadResult.getBuckets().size();
         int count=0;
 
-        int[] weekStep = new int[10];
-        String[] date = new String[10];
+
         //Used for aggregated data
         if (size > 0) {
             Log.e("History", "Number of buckets: " + dataReadResult.getBuckets().size());
@@ -192,7 +213,7 @@ public class CalorieFragment extends Fragment implements
                             int temp1 = (int)temp;
                             weekStep[count] = temp1;
 
-                            entries.add(new BarEntry(weekStep[count], count));
+                            entries.add(new Entry(weekStep[count], count));
 //                            entries.add(new BarEntry(weekStep[count], count));
                             date[count] = dateFormat.format(dp.getEndTime(TimeUnit.MILLISECONDS));
                             labels.add(date[count]);
@@ -204,29 +225,55 @@ public class CalorieFragment extends Fragment implements
 
                 }
 
-
+            if (count== 7) break;
             }
 
-            BarDataSet dataset = new BarDataSet(entries, "# of Calories");
-//            LineDataSet dataset = new LineDataSet(entries, "# of Calories");
-            BarData data = new BarData(labels, dataset);
-//            LineData data = new LineData(labels, dataset);
-            chart.setNoDataText("Touch to generate graph");
-            dataset.setColors(ColorTemplate.COLORFUL_COLORS);
-//            dataset.setDrawCubic(true);
-//            dataset.setDrawFilled(true);
+           // BarDataSet dataset = new BarDataSet(entries, "# of Calories");
+           LineDataSet dataset = new LineDataSet(entries, "Number of Calories");
+          //  BarData data = new BarData(labels, dataset);
+           LineData data = new LineData(labels, dataset);
+//            chart.setNoDataText("Touch to generate graph");
+//            dataset.setColors(ColorTemplate.COLORFUL_COLORS);
+            dataset.setDrawCubic(true);
+            dataset.setDrawFilled(true);
 //            chart.setDescription("Number of Steps over the week");
+            //chart.setBackgroundColor(Color.TRANSPARENT); //set whatever color you prefer
+           dataset.setFillAlpha(100);
+            dataset.setFillColor(8280002);
+            chart.setDrawGridBackground(false);
+            chart.getXAxis().setDrawGridLines(false);
+            chart.getAxisLeft().setDrawGridLines(false);
+            chart.getAxisRight().setDrawGridLines(false);
+            chart.setDrawBorders(false);
+            XAxis xAxis = chart.getXAxis();
+            xAxis.setDrawAxisLine(false);
+            xAxis.setYOffset(15);
+            chart.getAxisLeft().setDrawLabels(false);
+            chart.getAxisRight().setDrawLabels(false);
+            chart.setDescription("");
+            chart.setExtraTopOffset(15);
+            chart.setExtraLeftOffset(30);
+            chart.setExtraRightOffset(30);
+            chart.getAxisLeft().setStartAtZero(false);
+            chart.getAxisLeft().setAxisMinValue(900);
+            chart.getAxisLeft().setDrawAxisLine(false);
+            chart.getAxisRight().setDrawAxisLine(false);
+
+
             chart.setData(data);
-//            progressBar.setMax(16000);
-            for(int i :weekStep){
-                total = total + i;
-            }
+//            adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),R.layout.activity_listview,date);
+
+            //listView.setAdapter(adapter);//            progressBar.setMax(16000);
+//            for(int i :weekStep){
+//                total = total + i;
+//            }
+//            progressBar.setMax(15000);
 //            progressBar.setProgress(total);
-//            runOnUiThread(new Runnable() {
+//            getActivity().runOnUiThread(new Runnable() {
 //                @Override
 //                public void run() {
 //
-//                    week_total_text.setText(String.valueOf(total));
+//                    totalTextView.setText(String.valueOf(total + " Total"));
 //                }
 //            });
 
@@ -250,6 +297,7 @@ public class CalorieFragment extends Fragment implements
 
 
     }
+
     private class ViewWeekStepCountTask extends AsyncTask<Void, Void, Void> {
         protected Void doInBackground(Void... params) {
             displayLastWeeksData();
