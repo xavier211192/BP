@@ -78,11 +78,32 @@
 
         <activity
             android:name=".activities.graphActivity"
+            android:label="@string/app_name"
+            >
+        </activity>
 
+        <activity
+            android:name=".activities.DiagnosisActivity"
+            android:label="@string/app_name"
+            >
+        </activity>
+
+        <activity
+            android:name=".activities.lowriskActivity"
+            android:label="@string/app_name"
+            >
+        </activity>
+
+        <activity
+            android:name=".activities.ttsActivity"
+            android:label="@string/app_name"
             >
         </activity>
 
         <uses-permission android:name="android.permission.INTERNET"/>
+        <uses-permission android:name="android.permission.BLUETOOTH" />
+        <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
 
 
     </application>

@@ -218,8 +218,6 @@ public class CalorieFragment extends Fragment implements
                             date[count] = dateFormat.format(dp.getEndTime(TimeUnit.MILLISECONDS));
                             labels.add(date[count]);
                             count ++;
-
-
                         }
                     }
 

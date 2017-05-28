@@ -2,6 +2,7 @@ package com.example.android.bp.activities;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -234,6 +235,7 @@ public class StepFragment extends Fragment implements
             chart.setDescription("");
 
             chart.setData(data);
+
 
 //
 //                    chart.notifyDataSetChanged();

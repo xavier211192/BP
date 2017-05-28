@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 public class ttsActivity extends AppCompatActivity implements OnClickListener,OnInitListener
 {
-    private String words;
+
     private int MY_DATA_CHECK_CODE = 0;
     private TextToSpeech myTTS;
     private EditText text;
@@ -38,17 +38,17 @@ public class ttsActivity extends AppCompatActivity implements OnClickListener,On
 }
 
     public void onClick(View v){
-        words = text.getText().toString();
+        String words = text.getText().toString();
         speakWords(words);
     }
 
     private void speakWords(String speech){
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            myTTS.speak(speech,TextToSpeech.QUEUE_FLUSH,null,null);
-        } else {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            myTTS.speak(speech,TextToSpeech.QUEUE_FLUSH,null,null);
+//        } else {
             myTTS.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
-        }
+
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

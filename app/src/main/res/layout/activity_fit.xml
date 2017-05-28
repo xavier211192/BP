@@ -145,20 +145,11 @@
             android:layout_marginTop="10dp"
             android:textColor="@color/font"
             android:background="@color/button"
-            android:text="Test"
+            android:text="@string/risk_test"
             android:onClick="testActivity"
             />
 
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btn_view_caloriesgraph"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-            android:textColor="@color/font"
-            android:background="@color/button"
-            android:text="Test"
-            android:onClick="caloriesActivity"
-            />
+
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_view_info"
@@ -182,6 +173,15 @@
             android:onClick="graphActivity"
             />
 
+        <android.support.v7.widget.AppCompatButton
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/font"
+            android:background="@color/button"
+            android:text="TTS"
+            android:onClick="ttsActivity"
+            />
 
 
 

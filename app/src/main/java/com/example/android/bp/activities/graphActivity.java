@@ -34,7 +34,7 @@ public class graphActivity extends AppCompatActivity {
 
     public static class TabsExamplePagerAdapter extends FragmentPagerAdapter {
         // As we are implementing two tabs
-        private static final int NUM_ITEMS = 3;
+        private static final int NUM_ITEMS = 4;
 
         public TabsExamplePagerAdapter(FragmentManager fm) {
             super(fm);
@@ -51,6 +51,8 @@ public class graphActivity extends AppCompatActivity {
                     return new GlucoseFragment();
                 case 2:
                     return new StepFragment();
+                case 3:
+                    return new CombinedFragment();
                 default:
                     return null;
             }
@@ -73,6 +75,8 @@ public class graphActivity extends AppCompatActivity {
                     return "Glucose";
                 case 2:
                     return "Steps";
+                case 3:
+                    return "Combined";
                 default:
                     return null;
             }

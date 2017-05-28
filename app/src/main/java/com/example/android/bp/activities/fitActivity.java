@@ -1,6 +1,7 @@
 package com.example.android.bp.activities;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import static java.lang.Math.toIntExact;
@@ -41,6 +42,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+// New for TTS
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.TextToSpeech.OnInitListener;
+import java.util.Locale;
+import android.content.Intent;
+import android.widget.Toast;
 
 /**
  * Created by Prashanth on 4/11/2017.
@@ -49,9 +56,13 @@ import java.util.concurrent.TimeUnit;
 public class fitActivity extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        View.OnClickListener {
+        View.OnClickListener,OnInitListener {
 
     private Button mButtonViewWeek;
+    private int time = 0;
+    private int speechCount=0;
+    private String firsttextToSpeech;
+    private String textToSpeech;
     private int weekStep = 0;
     private Button mButtonViewToday;
     private Button mButtonViewCalories;
@@ -73,13 +84,23 @@ public class fitActivity extends AppCompatActivity implements
     private static final String AUTH_PENDING = "auth_state_pending";
     private boolean authInProgress = false;
     private GoogleApiClient mApiClient;
+    //Text to speech
+    private int MY_DATA_CHECK_CODE = 0;
+    private TextToSpeech myTTS;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fit);
         initViews();
+        initTime();
 
+        //text to speech--start
+        Intent checkTTSIntent = new Intent();
+        checkTTSIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
+        startActivityForResult(checkTTSIntent,MY_DATA_CHECK_CODE);
+// tts--end
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(Fitness.HISTORY_API)
                 .addScope(new Scope(Scopes.FITNESS_ACTIVITY_READ_WRITE))
@@ -90,6 +111,44 @@ public class fitActivity extends AppCompatActivity implements
 
         mGoogleApiClient1 = mGoogleApiClient;
     }
+
+//init Time method
+    public void initTime() {
+        Calendar c = Calendar.getInstance();
+        int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
+        if (timeOfDay >= 0 && timeOfDay < 12) {
+            time = 0;
+        } else if (timeOfDay >= 12 && timeOfDay < 16) {
+            time = 1;
+        } else if (timeOfDay >= 16 && timeOfDay < 21) {
+            time = 2;
+        } else if (timeOfDay >= 21 && timeOfDay < 24) {
+            time = 3;
+        }
+    }
+// Onint for text to speech
+public void onInit(int initStatus){
+    if(initStatus == TextToSpeech.SUCCESS){
+        myTTS.setLanguage(Locale.US);
+    }else if (initStatus == TextToSpeech.ERROR) {
+        Toast.makeText(this, "Sorry! Text To Speech failed...", Toast.LENGTH_LONG).show();
+    }
+}
+
+// onActivityResult method for text to speech
+protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    if (requestCode == MY_DATA_CHECK_CODE) {
+        if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
+            myTTS = new TextToSpeech(this, this);
+        }
+        else {
+            Intent installTTSIntent = new Intent();
+            installTTSIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
+            startActivity(installTTSIntent);
+        }
+    }
+}
+
 
     private void initViews() {
         mButtonViewWeek = (Button) findViewById(R.id.btn_view_week);
@@ -133,7 +192,41 @@ public class fitActivity extends AppCompatActivity implements
             int bar = (int) total1;
             progressBar.setProgress(bar);
             final String yes = String.valueOf(total);
+            // check for time of the day and switch accordingly text to speech
+            textToSpeech = "You have taken,"+yes+",steps";
+            switch (time)
+            {
+                case 0: firsttextToSpeech = "Good Morning! Your goal is 10,000 steps today." +textToSpeech+" today.Good Luck!";
+                        break;
 
+                case 1: firsttextToSpeech = "Good Afternoon!"+textToSpeech+ ",today. remember your goal!";
+                    break;
+                case 2: firsttextToSpeech = "Good Evening!" +textToSpeech+ "today. remember your goal!";
+                    break;
+                case 3: firsttextToSpeech = textToSpeech+",today. Get some rest. Good Night!";
+                    break;
+            }
+
+            if(speechCount==0) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+                    myTTS.speak(firsttextToSpeech, TextToSpeech.QUEUE_FLUSH, null, null);
+                    speechCount++;
+                } else {
+                    myTTS.speak(firsttextToSpeech, TextToSpeech.QUEUE_FLUSH, null);
+                    speechCount++;
+                }
+            } else  {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+                    myTTS.speak(textToSpeech, TextToSpeech.QUEUE_FLUSH, null, null);
+                } else {
+                    myTTS.speak(textToSpeech, TextToSpeech.QUEUE_FLUSH, null);
+
+                }
+
+            }
+            // text to speech end
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -163,8 +256,19 @@ public class fitActivity extends AppCompatActivity implements
                     ? 0
                     : totalSet.getDataPoints().get(0).getValue(Field.FIELD_CALORIES).asFloat();
 
+            int calorieCount = Math.round(total);
+            final String yes = String.valueOf(calorieCount);
+            //text to speech--start
+            textToSpeech = "You have burnt,"+yes+",calories!";
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
-            final String yes = String.valueOf(total);
+                myTTS.speak(textToSpeech, TextToSpeech.QUEUE_FLUSH, null, null);
+            } else {
+                myTTS.speak(textToSpeech, TextToSpeech.QUEUE_FLUSH, null);
+
+            }
+            // text to speech end
+
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -434,15 +538,11 @@ public class fitActivity extends AppCompatActivity implements
     }
 
     public void testActivity(View view) {
-        Intent i = new Intent(fitActivity.this, testActivity.class);
+        Intent i = new Intent(fitActivity.this, DiagnosisActivity.class);
         startActivity(i);
     }
 
 
-    public void caloriesActivity(View view) {
-        Intent i = new Intent(fitActivity.this, caloriesActivity.class);
-        startActivity(i);
-    }
 
     public void diabetesinfoActivity(View view) {
         Intent i = new Intent(fitActivity.this, diabetesinfoActivity.class);
@@ -452,6 +552,11 @@ public class fitActivity extends AppCompatActivity implements
 
     public void graphActivity(View view) {
         Intent i = new Intent(fitActivity.this, graphActivity.class);
+        startActivity(i);
+    }
+
+    public void ttsActivity(View view) {
+        Intent i = new Intent(fitActivity.this, ttsActivity.class);
         startActivity(i);
     }
 
