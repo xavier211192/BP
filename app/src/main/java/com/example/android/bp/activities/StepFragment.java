@@ -3,8 +3,10 @@ package com.example.android.bp.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,8 +70,9 @@ public class StepFragment extends Fragment implements
     public ArrayList<BarEntry> entries = new ArrayList<>();
     public ArrayList<String> labels = new ArrayList<String>();
 
-
-    public int weekStep = 0;
+    public  int[] weekStep = new int[10];
+    public  String[] date = new String[10];
+//    public int weekStep = 0;
     public int total = 0;
 
 
@@ -93,9 +96,7 @@ public class StepFragment extends Fragment implements
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_step, container, false);
-      chart =  (BarChart) v.findViewById(R.id.chartx);
-
-
+        chart =  (BarChart) v.findViewById(R.id.chartx);
         return v;
     }
 
@@ -178,8 +179,8 @@ public class StepFragment extends Fragment implements
         DataReadResult dataReadResult = Fitness.HistoryApi.readData(mGoogleApiClient, readRequest).await(1, TimeUnit.MINUTES);
         int size = dataReadResult.getBuckets().size();
         int count=0;
-        int[] weekStep = new int[10];
-        String[] date = new String[10];
+//        int[] weekStep = new int[10];
+//        String[] date = new String[10];
         //Used for aggregated data
         if (size > 0) {
             Log.e("History", "Number of buckets: " + dataReadResult.getBuckets().size());
@@ -237,7 +238,7 @@ public class StepFragment extends Fragment implements
             chart.setData(data);
 
 
-//
+            //
 //                    chart.notifyDataSetChanged();
 //                    progressBar.setMax(80000);
             for(int i :weekStep){
@@ -257,6 +258,7 @@ public class StepFragment extends Fragment implements
 
         }
 
+//
 
 
         //Used for non-aggregated data
@@ -267,8 +269,10 @@ public class StepFragment extends Fragment implements
             }
         }
 
-
     }
+
+
+
 
     private class ViewWeekStepCountTask extends AsyncTask<Void, Void, Void> {
         protected Void doInBackground(Void... params) {
