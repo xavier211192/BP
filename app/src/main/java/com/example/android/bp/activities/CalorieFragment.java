@@ -2,9 +2,13 @@ package com.example.android.bp.activities;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.media.Image;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -19,9 +23,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
@@ -59,6 +66,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import com.example.android.bp.R;
 
@@ -67,13 +75,21 @@ import com.example.android.bp.R;
  */
 public class CalorieFragment extends Fragment implements
         GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener
+        GoogleApiClient.OnConnectionFailedListener,
+        View.OnClickListener,TextToSpeech.OnInitListener
 {
 
 //    BarChart chart;
+    private String textToSpeech;
     LineChart chart;
     ProgressBar progressBar;
     TextView totalTextView;
+    TextView averageTextView;
+    TextView todayTextView;
+    ImageView trendup;
+    ImageView trenddown;
+    ImageButton speakEnglish;
+    ImageButton speakPolish;
    // ArrayAdapter <String> adapter ;
     ListView listView;
    // public ArrayList<BarEntry> entries = new ArrayList<>();
@@ -82,6 +98,15 @@ public class CalorieFragment extends Fragment implements
     public ArrayList<String> labels = new ArrayList<String>();
     //public int weekStep = 0;
     public int total = 0;
+    public int today = 0;
+    public int averageC = 0;
+    public String todayCount;
+    public String averageCal;
+    public int yesterday = 0;
+    private int MY_DATA_CHECK_CODE = 0;
+    private TextToSpeech myTTS;
+    private String englishTTS;
+    private String polishTTS;
 
     int[] weekStep = new int[10];
     String[] date = new String[10];
@@ -109,8 +134,18 @@ public class CalorieFragment extends Fragment implements
         View v = inflater.inflate(R.layout.fragment_calorie, container, false);
        // chart =  (BarChart) v.findViewById(R.id.chart);
         chart = (LineChart) v.findViewById(R.id.chart);
-        progressBar = (ProgressBar) v.findViewById(R.id.progress_bar);
-        totalTextView =(TextView) v.findViewById(R.id.total);
+        progressBar = (ProgressBar) v.findViewById(R.id.cPB);
+        totalTextView =(TextView) v.findViewById(R.id.totalTextView);
+        averageTextView = (TextView) v.findViewById(R.id.averageCaloriesTextView);
+        todayTextView = (TextView) v.findViewById(R.id.todayCaloriesText);
+        trendup = (ImageView)v.findViewById(R.id.trendup);
+        trenddown = (ImageView) v.findViewById(R.id.trenddown);
+        speakEnglish = (ImageButton) v.findViewById(R.id.speakEnglish);
+        speakEnglish.setOnClickListener(this);
+        speakPolish = (ImageButton) v.findViewById(R.id.speakPolish);
+        speakPolish.setOnClickListener(this);
+        trendup.setVisibility(View.INVISIBLE);
+        trenddown.setVisibility(View.INVISIBLE);
         // listView = (ListView) v.findViewById(R.id.list_view);
 
         return v;
@@ -120,6 +155,10 @@ public class CalorieFragment extends Fragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Context cont = getContext();
+
+        Intent checkTTSIntent = new Intent();
+        checkTTSIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
+        startActivityForResult(checkTTSIntent,MY_DATA_CHECK_CODE);
         mGoogleApiClient = new GoogleApiClient.Builder(cont)
                 .addApi(Fitness.HISTORY_API)
                 .addScope(new Scope(Scopes.FITNESS_ACTIVITY_READ_WRITE))
@@ -130,6 +169,28 @@ public class CalorieFragment extends Fragment implements
         new ViewWeekStepCountTask().execute();
 
 
+    }
+
+    public void onInit(int initStatus){
+        if(initStatus == TextToSpeech.SUCCESS){
+            myTTS.setLanguage(Locale.UK);
+        }else if (initStatus == TextToSpeech.ERROR) {
+            Toast.makeText(getActivity(), "Sorry! Text To Speech failed...", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    // onActivityResult method for text to speech
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == MY_DATA_CHECK_CODE) {
+            if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
+                myTTS = new TextToSpeech(getActivity(), this);
+            }
+            else {
+                Intent installTTSIntent = new Intent();
+                installTTSIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
+                startActivity(installTTSIntent);
+            }
+        }
     }
 
     @Override
@@ -223,7 +284,7 @@ public class CalorieFragment extends Fragment implements
 
                 }
 
-            if (count== 7) break;
+
             }
 
            // BarDataSet dataset = new BarDataSet(entries, "# of Calories");
@@ -259,21 +320,33 @@ public class CalorieFragment extends Fragment implements
 
 
             chart.setData(data);
-//            adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),R.layout.activity_listview,date);
-
-            //listView.setAdapter(adapter);//            progressBar.setMax(16000);
-//            for(int i :weekStep){
-//                total = total + i;
-//            }
-//            progressBar.setMax(15000);
-//            progressBar.setProgress(total);
-//            getActivity().runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
 //
-//                    totalTextView.setText(String.valueOf(total + " Total"));
-//                }
-//            });
+            for(int i=0; i<8; i++){
+                if(i==6){
+                    yesterday = weekStep[i];
+                }
+                if(i==7){
+                    today = weekStep[i];
+                }
+                total = total + weekStep[i];
+            }
+            averageC = total/8;
+            averageCal = String.valueOf(averageC);
+            todayCount = String.valueOf(today);
+            progressBar.setMax(16000);
+            progressBar.setProgress(total);
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+
+                    totalTextView.setText(String.valueOf(total));
+                    averageTextView.setText(String.valueOf(averageC + " kcal"));
+                    todayTextView.setText(String.valueOf(today + " kcal"));
+                    if(today > yesterday){
+                        trendup.setVisibility(View.VISIBLE);
+                    }else trenddown.setVisibility(View.VISIBLE);
+                }
+            });
 
 //            chart.animateXY(2000,2000);
 
@@ -296,6 +369,37 @@ public class CalorieFragment extends Fragment implements
 
     }
 
+    @Override
+    public void onClick(View v) {
+    switch(v.getId()){
+        case R.id.speakEnglish: {
+            englishTTS = " Hi, Your calorie count for today is:" + todayCount+ ",calories. You average," + averageCal + ",calories,this week";
+
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                myTTS.speak(englishTTS, TextToSpeech.QUEUE_FLUSH, null, null);
+            }else {
+                myTTS.speak(englishTTS,TextToSpeech.QUEUE_FLUSH,null);
+            }
+            }
+            break;
+        case R.id.speakPolish: {
+            myTTS.setLanguage(new Locale("pl_PL"));
+            polishTTS = " CZEŚĆ, Twój kalorii jest dzisiaj:" + todayCount+ ". Ty przeciętnie," + averageCal + ",kalorie,w tym tygodniu";
+
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                myTTS.speak(polishTTS, TextToSpeech.QUEUE_FLUSH, null, null);
+            }else {
+                myTTS.speak(polishTTS,TextToSpeech.QUEUE_FLUSH,null);
+            }
+        }
+        break;
+
+    }
+
+
+    }
     private class ViewWeekStepCountTask extends AsyncTask<Void, Void, Void> {
         protected Void doInBackground(Void... params) {
             displayLastWeeksData();
