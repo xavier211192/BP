@@ -80,6 +80,11 @@
     <string name="help_high">Your health is at risk. Visit a doctor immediately!</string>
     <string name="help_moderate">Your health is at risk!</string>
     <string name="help_increased"> Make small changes in lifestyle to make a big difference!</string>
+
+    <!-- New June 15 -->
+    <string name="avgcalories">Average</string>
+    <string name="todaycalories"> Today</string>
+
     <!-- spinner -->
 
     <string-array name="meal_array">
