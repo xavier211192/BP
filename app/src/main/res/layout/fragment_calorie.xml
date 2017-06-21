@@ -1,15 +1,18 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
     tools:context="com.example.android.bp.activities.CalorieFragment">
-
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
     <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/grey"
+
         >
 
 
@@ -21,15 +24,157 @@
         android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
         android:layout_width="350dp"
-        android:layout_height="300dp" />
+        android:layout_height="200dp" />
+</android.support.v7.widget.LinearLayoutCompat>
+
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:background="@color/grey">
+
+       <TextView
+           android:id="@+id/textview"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentTop="true"
+           android:layout_marginTop="10dp"
+           android:text="WEEK"
+           android:textSize="20sp"
+           android:layout_centerHorizontal="true" />
+
+       <ImageButton
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:id="@+id/speakPolish"
+           android:src="@drawable/ic_keyboard_voice_black_24dp"
+           android:layout_alignParentLeft="true"
+           style="?android:attr/borderlessButtonStyle"/>
+       <ImageButton
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:id="@+id/speakEnglish"
+           android:src="@drawable/ic_keyboard_voice_english_24dp"
+           android:layout_alignParentRight="true"
+           style="?android:attr/borderlessButtonStyle"/>
+
+       <ProgressBar
+
+           android:id="@+id/cPB"
+           android:layout_centerInParent="true"
+           style="?android:attr/progressBarStyleHorizontal"
+           android:layout_width="200dp"
+           android:layout_height="220dp"
+           android:indeterminate="false"
+           android:max="100"
+           android:progressDrawable="@drawable/progressbar2"/>
+
+       <android.support.v7.widget.AppCompatTextView
+       android:id="@+id/totalTextView"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_centerHorizontal="true"
+       android:layout_centerVertical="true"
+       android:text=""
+       android:textColor="#212121"
+       android:textSize="18sp"
+       />
+
+       <android.support.v7.widget.AppCompatTextView
+           android:id="@+id/dispTextView1"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_centerHorizontal="true"
+           android:layout_alignParentBottom="true"
+           android:paddingBottom="25dp"
+           android:text="kcal"
+           android:textColor="#212121"
+           android:textSize="18sp"
+           />
+
+   </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:id="@+id/todayview"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentLeft="true">
 
 
+            <TextView
+                android:id="@+id/TodaytextView"
+                android:paddingLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/todaycalories"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:paddingLeft="10dp"
+                android:paddingTop="3dp"
+                android:id="@+id/todayCaloriesText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="HELLLO"
+                android:textColor="@color/hint"
+                android:textSize="22sp"/>
 
 
+        </android.support.v7.widget.LinearLayoutCompat>
+       <RelativeLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/trendup"
+            android:src="@drawable/ic_trending_up_black_24dp"
+            style="?android:attr/borderlessButtonStyle"/>
+           <ImageView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:id="@+id/trenddown"
+               android:src="@drawable/ic_trending_down_black_24dp"
+               style="?android:attr/borderlessButtonStyle"/>
+       </RelativeLayout>
+        </LinearLayout>
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true">
 
+        <TextView
+        android:id="@+id/averageCalories"
+        android:paddingLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/avgcalories"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:paddingLeft="10dp"
+        android:paddingTop="3dp"
+        android:id="@+id/averageCaloriesTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/hint"
+        android:textSize="22sp"/>
     </android.support.v7.widget.LinearLayoutCompat>
 
-
-
-
-    </FrameLayout>
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_height="2dp"
+        android:background="@color/lightgrey"/>
+</LinearLayout>
+    </ScrollView>
