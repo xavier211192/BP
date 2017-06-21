@@ -373,6 +373,7 @@ public class CalorieFragment extends Fragment implements
     public void onClick(View v) {
     switch(v.getId()){
         case R.id.speakEnglish: {
+            myTTS.setLanguage(Locale.UK);
             englishTTS = " Hi, Your calorie count for today is:" + todayCount+ ",calories. You average," + averageCal + ",calories,this week";
 
 
