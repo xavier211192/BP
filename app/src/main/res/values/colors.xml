@@ -15,5 +15,5 @@
     <color name="lightblue">#29b6f6</color>
     <color name="lightback"> #e0e0e0</color>
     <color name="brown"> #795548</color>
-
+    <color name="lightgrey"> #bdbdbd</color>
 </resources>
